@@ -4,6 +4,11 @@ import json
 app = Flask(__name__)
 
 
+@app.after_request
+def remove_referrer_policy(response):
+    del response.headers['Referrer-Policy']
+    return response
+
 @app.route('/send/', methods=['POST'])
 def test_gpt():
     payload = request.json
